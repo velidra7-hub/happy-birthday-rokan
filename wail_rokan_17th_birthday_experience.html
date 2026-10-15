@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAPPY 17TH BIRTHDAY WAIL (ROKAN)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        chrome: {
+                            50: '#f6f6f7',
+                            100: '#e1e3e8',
+                            200: '#c5c9d3',
+                            300: '#9fa6b7',
+                            400: '#757e97',
+                            500: '#58617a',
+                            600: '#464d63',
+                            700: '#3a3f52',
+                            800: '#333745',
+                            900: '#2e313b',
+                            950: '#1a1c23',
+                        },
+                        neon: {
+                            cyan: '#00f3ff',
+                            silver: '#e2e8f0',
+                            glow: '#38bdf8'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'shimmer': 'shimmer 2.5s infinite linear',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200% 0' },
+                            '100%': { backgroundPosition: '200% 0' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #0b0c10;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Metallic Chrome Text Glow */
+        .chrome-text {
+            background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 25%, #ffffff 50%, #71717a 75%, #e4e4e7 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 4s linear infinite;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: rgba(22, 25, 35, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 12px 40px 0 rgba(0, 243, 255, 0.1);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0c10;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3f3f46;
+        }
+
+        /* Particle Canvas overlay */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        /* Glowing Accent Borders */
+        .neon-border {
+            position: relative;
+        }
+        .neon-border::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            background: linear-gradient(90deg, #00f3ff, #ffffff, #00f3ff);
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0.2;
+            transition: opacity 0.3s ease;
+        }
+        .neon-border:hover::before {
+            opacity: 0.8;
+        }
+
+        /* Custom Slider Styling */
+        input[type=range] {
+            -webkit-appearance: none;
+            background: #27272a;
+            border-radius: 8px;
+            height: 6px;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.8);
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen relative flex flex-col justify-between selection:bg-cyan-500 selection:text-black">
+
+    <!-- Confetti Canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Ambient Glowing Background Elements -->
+    <div class="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="fixed bottom-10 right-10 w-[350px] h-[350px] bg-zinc-400/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-10 flex-grow w-full">
+
+        <!-- NAVBAR / TOP STATUS -->
+        <header class="flex justify-between items-center mb-12 border-b border-zinc-800 pb-5">
+            <div class="flex items-center space-x-3">
+                <div class="w-3 h-3 rounded-full bg-cyan-400 animate-pulse"></div>
+                <span class="text-xs font-mono uppercase tracking-widest text-zinc-400">STATUS: 17TH CHAPTER UNLOCKED</span>
+            </div>
+            <div class="text-xs font-mono text-zinc-400 border border-zinc-800 px-3 py-1.5 rounded-full bg-zinc-900/60">
+                <i class="fa-regular font-bold fa-calendar-days text-cyan-400 mr-2"></i>NOV 16
+            </div>
+        </header>
+
+        <!-- HERO SECTION -->
+        <section class="text-center my-12 relative">
+            <div class="inline-block px-4 py-1.5 rounded-full bg-zinc-900/80 border border-zinc-700/50 text-zinc-300 text-xs font-mono tracking-widest uppercase mb-6 shadow-inner">
+                ⚡ Special Birthday Release
+            </div>
+
+            <h1 class="text-5xl sm:text-7xl md:text-8xl font-black tracking-tight uppercase leading-none mb-4 chrome-text">
+                HAPPY 17TH<br>
+                <span class="text-white drop-shadow-[0_0_25px_rgba(255,255,255,0.3)]">WAIL</span> 
+                <span class="text-zinc-500 font-light text-4xl sm:text-6xl md:text-7xl block sm:inline mt-2 sm:mt-0">(ROKAN)</span>
+            </h1>
+
+            <p class="max-w-2xl mx-auto text-zinc-400 text-sm sm:text-base font-normal mt-6 leading-relaxed">
+                Celebrating the ultimate aesthetic, smooth jazz vibes, pristine hair days, and endless plates of Algeria's finest delicacies. Welcome to Chapter 17.
+            </p>
+
+            <!-- CELEBRATE ACTION BUTTONS -->
+            <div class="mt-8 flex flex-wrap justify-center gap-4">
+                <button onclick="triggerBirthdayBurst()" class="px-8 py-3.5 rounded-full bg-white text-black font-semibold text-sm hover:bg-zinc-200 transition-all duration-300 transform hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.4)] flex items-center space-x-2">
+                    <i class="fa-solid fa-wand-magic-sparkles text-cyan-600"></i>
+                    <span>Launch Celebration</span>
+                </button>
+                <a href="#messages" class="px-8 py-3.5 rounded-full bg-zinc-900 text-zinc-200 border border-zinc-700 font-semibold text-sm hover:bg-zinc-800 hover:border-zinc-500 transition-all duration-300 flex items-center space-x-2">
+                    <i class="fa-regular fa-envelope"></i>
+                    <span>Read Wishes</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- SOUND & VIBE PLAYER (WEB AUDIO SYNTH & VISUALIZER) -->
+        <section class="my-16">
+            <div class="glass-card rounded-2xl p-6 sm:p-8 relative overflow-hidden neon-border">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                    <!-- Left Synth Controls -->
+                    <div class="space-y-3 text-center md:text-left">
+                        <div class="flex items-center justify-center md:justify-start space-x-2">
+                            <i class="fa-solid fa-compact-disc text-cyan-400 animate-spin" style="animation-duration: 8s;"></i>
+                            <span class="text-xs font-mono text-cyan-400 tracking-wider uppercase">Interactive Audio Vibe</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white tracking-wide">Jazz & Piano Lounge Synth</h3>
+                        <p class="text-xs text-zinc-400 max-w-sm">
+                            Click play to generate real-time ambient harmonic jazz chord progressions using Web Audio synth nodes.
+                        </p>
+                        <div class="pt-2">
+                            <button id="audio-toggle-btn" onclick="toggleJazzAudio()" class="px-6 py-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-500/20 font-medium text-xs tracking-wider uppercase transition-all duration-200 flex items-center space-x-2 mx-auto md:mx-0">
+                                <i id="audio-icon" class="fa-solid fa-play"></i>
+                                <span id="audio-btn-text">Play Jazz Vibe</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Audio Frequency Visualizer -->
+                    <div class="w-full md:w-1/2 bg-zinc-950/80 border border-zinc-800 rounded-xl p-4 flex flex-col justify-between h-36">
+                        <div class="flex justify-between items-center text-[10px] font-mono text-zinc-500 border-b border-zinc-800/80 pb-2">
+                            <span>CHROME FREQUENCY VISUALIZER</span>
+                            <span id="audio-status" class="text-zinc-400">PAUSED</span>
+                        </div>
+                        
+                        <!-- Visualizer Bars Container -->
+                        <div id="visualizer-bars" class="flex items-end justify-between gap-1 h-20 pt-2 px-2">
+                            <!-- JS injects 24 bars here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTERACTIVE STYLE METER MODULE -->
+        <section class="my-16">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">The Wail (Rokan) Stat Dashboard</h2>
+                <p class="text-zinc-400 text-xs sm:text-sm mt-1">Adjust and calibrate the legendary birthday attributes</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Hair Perfection Gauge -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-zinc-800/80 flex items-center justify-center text-cyan-400 border border-zinc-700">
+                                <i class="fa-solid fa-scissors"></i>
+                            </div>
+                            <span id="hair-val" class="font-mono text-lg font-bold text-cyan-400">100%</span>
+                        </div>
+                        <h4 class="font-bold text-white text-base">Hair Perfection Rate</h4>
+                        <p class="text-xs text-zinc-400 mt-1">Daily haircut precision & style calibration standard.</p>
+                    </div>
+                    <div class="mt-6">
+                        <input type="range" id="hair-slider" min="90" max="100" value="100" class="w-full" oninput="updateMeter('hair', this.value)">
+                        <div class="text-[10px] font-mono text-zinc-500 mt-2 text-right">LOCKED AT MASTERCLASS</div>
+                    </div>
+                </div>
+
+                <!-- Jazz Vibe Level -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-zinc-800/80 flex items-center justify-center text-zinc-200 border border-zinc-700">
+                                <i class="fa-solid fa-music"></i>
+                            </div>
+                            <span id="jazz-val" class="font-mono text-lg font-bold text-zinc-200">999 BPM</span>
+                        </div>
+                        <h4 class="font-bold text-white text-base">Jazz & Piano Affinity</h4>
+                        <p class="text-xs text-zinc-400 mt-1">Ear for smooth chord progressions and deep lounge beats.</p>
+                    </div>
+                    <div class="mt-6">
+                        <input type="range" id="jazz-slider" min="100" max="999" value="999" class="w-full" oninput="updateMeter('jazz', this.value)">
+                        <div class="text-[10px] font-mono text-zinc-500 mt-2 text-right">MAX RESONANCE</div>
+                    </div>
+                </div>
+
+                <!-- Algerian Gourmet Fuel Gauge -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-zinc-800/80 flex items-center justify-center text-amber-400 border border-zinc-700">
+                                <i class="fa-solid fa-utensils"></i>
+                            </div>
+                            <span id="food-val" class="font-mono text-lg font-bold text-amber-400">FULL</span>
+                        </div>
+                        <h4 class="font-bold text-white text-base">Bourak, Rechta & Tmina Fuel</h4>
+                        <p class="text-xs text-zinc-400 mt-1">Optimal traditional culinary power level needed today.</p>
+                    </div>
+                    <div class="mt-6">
+                        <input type="range" id="food-slider" min="50" max="100" value="100" class="w-full" oninput="updateMeter('food', this.value)">
+                        <div class="text-[10px] font-mono text-zinc-500 mt-2 text-right">MAXIMUM CAPACITY</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MESSAGES SECTION (COPYABLE DIRECTLY TO TELEGRAM / DISCORD) -->
+        <section id="messages" class="my-16">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Copyable Birthday Texts</h2>
+                <p class="text-zinc-400 text-xs sm:text-sm mt-1">Formatted perfectly with unique platform typography for instant sending.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- TELEGRAM FORMATTED CARD -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between relative border border-cyan-500/20">
+                    <div>
+                        <div class="flex justify-between items-center pb-4 mb-4 border-b border-zinc-800">
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-brands fa-telegram text-cyan-400 text-xl"></i>
+                                <span class="font-bold text-sm text-white">Telegram Format</span>
+                            </div>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800">Unicode Styled</span>
+                        </div>
+
+                        <!-- Text Box -->
+                        <div id="telegram-text" class="bg-zinc-950/80 p-4 rounded-xl text-xs sm:text-sm text-zinc-300 font-mono leading-relaxed overflow-y-auto max-h-72 border border-zinc-800/80 whitespace-pre-line">🎉✨ 𝐻𝒜𝒫𝒫𝒴 𝟣𝟩𝒯𝐻 𝐵𝐼𝑅𝒯𝐻𝒟𝒜𝒴 𝒯𝒪 𝒯𝐻𝐸 𝒪𝒩𝐸 & 𝒪𝒩𝐿𝒴 𝑾𝑨𝑰𝑳 / 𝑅𝒪𝒦𝒜𝒩! ✨🎉
+
+Honestly, if someone told me back in late July or early August when we first started talking that you’d end up becoming my best friend so fast, I don’t know if I would’ve believed them. But here we are! It’s crazy how in just a few short months, you’ve become someone I talk to all the time and genuinely rely on. It feels like we’ve known each other way longer than we actually have.
+
+You honestly have one of the coolest and most unique personalities out there. From your immaculate taste in music—listening to smooth jazz and deep piano melodies like a whole connoisseur—to your absolute obsession with design and that clean 𝔠𝔥𝔯𝔬𝔪𝔢 aesthetic. And of course, I CANNOT forget your hair. Seriously, the dedication you have to making sure every single hair day is a 10/10 masterpiece is unmatched! 💇‍♂️✨
+
+I hope turning 17 brings you everything you’ve been working towards and more. May your year be full of:
+🎷 The best jazz playlists on repeat
+🎹 Live piano vibes
+🍽️ An endless supply of bourak, rechta, and tmina
+🩶 Maximum chrome perfection
+💈 And 365 consecutive perfect hair days without a single fail
+
+Thank you for being such an awesome best friend, for all the late conversations, and for just being yourself. I’m super grateful that we met this year and I’m so happy to celebrate your 17th with you. Have the absolute best day today, eat all the good food, and enjoy every second of it! You deserve the world, Rokan!! 🥳🎉🩶✨</div>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-zinc-800/60 flex justify-end">
+                        <button onclick="copyText('telegram-text', 'tg-btn')" id="tg-btn" class="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-semibold text-xs transition-all duration-200 flex items-center space-x-2 shadow-lg shadow-cyan-500/20">
+                            <i class="fa-regular fa-copy"></i>
+                            <span>Copy for Telegram</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- DISCORD FORMATTED CARD -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between relative border border-indigo-500/20">
+                    <div>
+                        <div class="flex justify-between items-center pb-4 mb-4 border-b border-zinc-800">
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-brands fa-discord text-indigo-400 text-xl"></i>
+                                <span class="font-bold text-sm text-white">Discord Format</span>
+                            </div>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-800">Markdown Headers</span>
+                        </div>
+
+                        <!-- Text Box -->
+                        <div id="discord-text" class="bg-zinc-950/80 p-4 rounded-xl text-xs sm:text-sm text-zinc-300 font-mono leading-relaxed overflow-y-auto max-h-72 border border-zinc-800/80 whitespace-pre-line"># 🎷✨ 𝐇𝐀𝐏𝐏𝐘 𝟏𝟕𝐓𝐇 𝐁𝐈𝐑𝐓𝐇𝐃𝐀𝐘 𝐑𝐎𝐊𝐀𝐍 !! ✨🎹
+
+> ### *To the best friend who made the end of summer so much better...*
+
+***
+
+It’s actually wild thinking back to the end of July and early August when we first started talking. We haven't even known each other for a full year yet, but you’ve quickly become my best guy friend and someone I love talking to every day. Meeting you was easily one of the highlights of my year!
+
+Happy 17th birthday, **Wail**! You’re truly one of a kind. Who else do I know that gets hyped over smooth jazz tracks and piano pieces, has an elite eye for design, appreciates a cold chrome visual aesthetic, AND holds a national record for caring about their hair that much?! (Seriously though, your hair dedication is legendary 💈🔥). 
+
+For your 17th chapter, I’m sending you the ultimate birthday wish list:
+* 🎶 **Music:** Unlimited smooth jazz & piano tracks on loop.
+* 🍽️ **Food:** Unlimited plates of top-tier *bourak*, *rechta*, and *tmina*.
+* 🩶 **Aesthetic:** Pure, shiny **𝕔𝕙𝕣𝕠𝕞𝕖** everything.
+* ✨ **Hair:** Never encountering a single bad hair day for the entire year.
+
+Thank you for being such an amazing friend, for all the laughs, and for making these past few months so much fun. I hope 17 treats you with all the happiness, success, and good energy in the world. Celebrate big today and eat well!! 🥳🎂✨</div>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-zinc-800/60 flex justify-end">
+                        <button onclick="copyText('discord-text', 'dc-btn')" id="dc-btn" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs transition-all duration-200 flex items-center space-x-2 shadow-lg shadow-indigo-600/20">
+                            <i class="fa-regular fa-copy"></i>
+                            <span>Copy for Discord</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="mt-20 pt-8 border-t border-zinc-800 text-center text-zinc-500 text-xs font-mono">
+            <p>DESIGNED ESPECIALLY FOR WAIL (ROKAN) • CHAPTER 17 • NOVEMBER 16</p>
+        </footer>
+    </div>
+
+    <!-- JAVASCRIPT CORE LOGIC -->
+    <script>
+        // --- 1. INITIALIZE FREQUENCY VISUALIZER BARS ---
+        const visualizerContainer = document.getElementById('visualizer-bars');
+        const totalBars = 28;
+        const barElements = [];
+
+        for (let i = 0; i < totalBars; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'w-full bg-gradient-to-t from-cyan-500 via-zinc-300 to-white rounded-t transition-all duration-75';
+            bar.style.height = '15%';
+            visualizerContainer.appendChild(bar);
+            barElements.push(bar);
+        }
+
+        // --- 2. WEB AUDIO SYNTHESIS (SMOOTH JAZZ CHORD AMBIENCE) ---
+        let audioCtx = null;
+        let isPlaying = false;
+        let synthInterval = null;
+        let visualizerAnimation = null;
+
+        // Warm Jazz Chord Frequencies (Hz)
+        const jazzChords = [
+            [261.63, 329.63, 392.00, 493.88], // Cmaj7
+            [220.00, 261.63, 329.63, 392.00], // Am7
+            [293.66, 349.23, 440.00, 523.25], // Dm7
+            [196.00, 246.94, 293.66, 349.23]  // G7
+        ];
+
+        function toggleJazzAudio() {
+            if (!isPlaying) {
+                startAudio();
+            } else {
+                stopAudio();
+            }
+        }
+
+        function startAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            isPlaying = true;
+            document.getElementById('audio-btn-text').innerText = 'PAUSE VIBE';
+            document.getElementById('audio-icon').className = 'fa-solid fa-pause';
+            document.getElementById('audio-status').innerText = 'PLAYING (LIVE SYNTH)';
+            document.getElementById('audio-status').className = 'text-cyan-400 font-bold';
+
+            let chordIndex = 0;
+            playChord(jazzChords[chordIndex]);
+
+            synthInterval = setInterval(() => {
+                chordIndex = (chordIndex + 1) % jazzChords.length;
+                playChord(jazzChords[chordIndex]);
+            }, 3000);
+
+            animateVisualizer();
+        }
+
+        function stopAudio() {
+            isPlaying = false;
+            if (synthInterval) clearInterval(synthInterval);
+            if (visualizerAnimation) cancelAnimationFrame(visualizerAnimation);
+
+            document.getElementById('audio-btn-text').innerText = 'PLAY JAZZ VIBE';
+            document.getElementById('audio-icon').className = 'fa-solid fa-play';
+            document.getElementById('audio-status').innerText = 'PAUSED';
+            document.getElementById('audio-status').className = 'text-zinc-400';
+
+            // Reset visualizer bars
+            barElements.forEach(bar => bar.style.height = '15%');
+        }
+
+        function playChord(freqs) {
+            if (!isPlaying || !audioCtx) return;
+
+            freqs.forEach(freq => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+                // Soft piano-like attack & decay envelope
+                gain.gain.setValueAtTime(0, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.08, audioCtx.currentTime + 0.3);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 2.8);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start();
+                osc.stop(audioCtx.currentTime + 2.9);
+            });
+        }
+
+        function animateVisualizer() {
+            if (!isPlaying) return;
+
+            barElements.forEach(bar => {
+                const randomHeight = Math.floor(Math.random() * 80) + 15;
+                bar.style.height = `${randomHeight}%`;
+            });
+
+            setTimeout(() => {
+                if (isPlaying) {
+                    visualizerAnimation = requestAnimationFrame(animateVisualizer);
+                }
+            }, 100);
+        }
+
+
+        // --- 3. CONFETTI & PARTICLES CANVAS SYSTEM ---
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 8 + 4;
+                this.speedX = (Math.random() - 0.5) * 12;
+                this.speedY = (Math.random() - 0.8) * 12;
+                this.gravity = 0.2;
+                this.color = ['#00f3ff', '#ffffff', '#c5c9d3', '#38bdf8', '#fbbf24'][Math.floor(Math.random() * 5)];
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = (Math.random() - 0.5) * 10;
+                this.opacity = 1;
+            }
+
+            update() {
+                this.speedY += this.gravity;
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.rotation += this.rotationSpeed;
+                this.opacity -= 0.008;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                ctx.restore();
+            }
+        }
+
+        function triggerBirthdayBurst() {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 3;
+
+            for (let i = 0; i < 120; i++) {
+                particles.push(new Particle(centerX, centerY));
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                if (particles[i].opacity <= 0) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+
+        // --- 4. INTERACTIVE METERS UPDATER ---
+        function updateMeter(type, val) {
+            if (type === 'hair') {
+                document.getElementById('hair-val').innerText = val + '%';
+            } else if (type === 'jazz') {
+                document.getElementById('jazz-val').innerText = val + ' BPM';
+            } else if (type === 'food') {
+                document.getElementById('food-val').innerText = val == 100 ? 'FULL' : val + '%';
+            }
+        }
+
+
+        // --- 5. CLIPBOARD COPY UTILITY ---
+        function copyText(elementId, btnId) {
+            const textToCopy = document.getElementById(elementId).innerText;
+            const button = document.getElementById(btnId);
+            const originalHTML = button.innerHTML;
+
+            // Using standard textarea fallback for iframe reliability
+            const textArea = document.createElement("textarea");
+            textArea.value = textToCopy;
+            document.body.appendChild(textArea);
+            textArea.select();
+
+            try {
+                document.execCommand('copy');
+                button.innerHTML = '<i class="fa-solid fa-check"></i> <span>Copied!</span>';
+                button.classList.add('bg-emerald-500', 'text-white');
+
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.classList.remove('bg-emerald-500', 'text-white');
+                }, 2000);
+            } catch (err) {
+                console.error('Copy failed', err);
+            }
+
+            document.body.removeChild(textArea);
+        }
+    </script>
+</body>
+</html>
